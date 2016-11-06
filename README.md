@@ -7,5 +7,5 @@ It was written to gather a load of user data from an Ubuntu box that was being p
 ## Notes and Limitations
 
 * Assumes UIDs start at 1000
-* Assumes RSA keys for SSH
+* Assumes you're using feature/multiple_ssh_keys or a compatible fork
 * Requires sudo to collect keys and password hashes
