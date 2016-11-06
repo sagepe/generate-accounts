@@ -5,6 +5,7 @@ import pwd
 import grp
 import spwd
 import yaml
+import re
 
 # A data structure
 data = { 'accounts': {} }
@@ -31,14 +32,19 @@ for user in users:
     for g in grp.getgrall():
         if user in g.gr_mem:
             data['accounts'][user]['groups'].append(g.gr_name)
-    # RSA ssh key, if it exists
-    pubkey = "/home/" + user + "/.ssh/id_rsa.pub"
-    if os.path.isfile(pubkey):
-        key = open(pubkey, 'r')
-        for line in key:
+    # Get SSH keys from authorized_keys
+    authorized_keys = "/home/" + user + "/.ssh/authorized_keys"
+    if os.path.isfile(authorized_keys):
+        data['accounts'][user]['ssh_keys'] = {}
+        keys = open(authorized_keys, 'r')
+        for line in keys:
+            line.strip()
+            # the .strip() isn't always enough for some unicode chars.
+            line = re.sub("\n", "", line, flags=re.UNICODE)
             key_data = line.split(' ')
-            data['accounts'][user]['ssh_key'] = key_data[1]
-        key.close
+            data['accounts'][user]['ssh_keys'][key_data[2]] = \
+                { 'type': key_data[0], 'key': key_data[1] }
+        keys.close
 
 # Out it comes
 print yaml.dump(data, default_flow_style=False)
