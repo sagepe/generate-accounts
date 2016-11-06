@@ -41,4 +41,4 @@ for user in users:
         key.close
 
 # Out it comes
-print yaml.dump(data)
+print yaml.dump(data, default_flow_style=False)
