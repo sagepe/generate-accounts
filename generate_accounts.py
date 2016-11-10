@@ -38,9 +38,7 @@ for user in users:
         data['accounts'][user]['ssh_keys'] = {}
         keys = open(authorized_keys, 'r')
         for line in keys:
-            line.strip()
-            # the .strip() isn't always enough for some unicode chars.
-            line = re.sub("\n", "", line, flags=re.UNICODE)
+            line = line.strip()
             key_data = line.split(' ')
             data['accounts'][user]['ssh_keys'][key_data[2]] = \
                 { 'type': key_data[0], 'key': key_data[1] }
