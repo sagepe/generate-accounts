@@ -21,7 +21,7 @@ for user in users:
     p = pwd.getpwnam(user)
     data['accounts'][user] = {}
     data['accounts'][user]['uid'] = p.pw_uid
-    data['accounts'][user]['comment'] = p.pw_gecos
+    data['accounts'][user]['comment'] = p.pw_gecos.rstrip(',')
     data['accounts'][user]['home_dir'] = p.pw_dir
     data['accounts'][user]['shell'] = p.pw_shell
     # shadow data
