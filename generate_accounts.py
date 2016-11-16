@@ -38,10 +38,12 @@ for user in users:
         data['accounts'][user]['ssh_keys'] = {}
         keys = open(authorized_keys, 'r')
         for line in keys:
-            line = line.strip()
-            key_data = line.split(' ')
-            data['accounts'][user]['ssh_keys'][key_data[2]] = \
-                { 'type': key_data[0], 'key': key_data[1] }
+            # Crude attempt to make sure we have something we can work with:
+            if re.match("^\S+\s+\S+\s+\S+", line) is not None:
+                line = line.strip()
+                key_data = line.split(' ')
+                data['accounts'][user]['ssh_keys'][key_data[2]] = \
+                    { 'type': key_data[0], 'key': key_data[1] }
         keys.close
 
 # Out it comes
