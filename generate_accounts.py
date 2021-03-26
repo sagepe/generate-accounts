@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import os
 import pwd
@@ -47,4 +47,5 @@ for user in users:
         keys.close
 
 # Out it comes
-print yaml.dump(data, default_flow_style=False)
+print( yaml.dump(data, default_flow_style=False) )
+
